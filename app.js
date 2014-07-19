@@ -24,7 +24,7 @@ function stat () {
 	} );
 
 	if ( stats.length > 100 ) {
-		stats = array.limit( stats, 0, 100 );
+		stats = array.limit( stats, 100 );
 	}
 }
 

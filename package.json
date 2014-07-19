@@ -30,7 +30,6 @@
   "dependencies": {
     "turtle.io": "2.1.2",
     "keigai": "0.5.5",
-    "filesize": "2.0.3",
     "moment": "2.7.0"
   },
   "devDependencies": {},

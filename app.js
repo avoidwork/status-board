@@ -1,6 +1,5 @@
 var TurtleIO = require( "turtle.io" ),
     keigai   = require( "keigai" ),
-    filesize = require("filesize" ),
     moment   = require( "moment" ),
     os       = require( "os" ),
     config   = require( "./config.json" ),
@@ -8,7 +7,8 @@ var TurtleIO = require( "turtle.io" ),
     array    = keigai.util.array,
     csv      = keigai.util.json.csv,
     merge    = keigai.util.merge,
-    stats    = [];
+    stats    = [],
+    GB       = Math.pow( 2, 30 );
 
 function cpu () {
 	return array.keySort( stats.map( function ( i ) {
@@ -26,20 +26,41 @@ function table () {
 	return array.last( stats, 10 ).reverse().map( function ( i ) {
 		return {
 			cpu    : i.cpu["1 min"],
-			memory : filesize( i.memory.used, {base: 2} )
+			memory : i.memory.used + " GB"
 		};
 	} );
 }
 
-function transform ( title, data ) {
-	var sequences = [];
+function transform ( title, unit, data ) {
+	var keys      = data.length > 0 ? array.keys( data[0] ) : [],
+	    sequences = [],
+	    obj;
+
+	array.remove( keys, "cpu" );
+	array.remove( keys, "memory" );
+
+	array.each( keys, function ( k ) {
+		sequences.push( {
+			title: k,
+			datapoints: data.map( function ( i ) {
+				return {
+					title : i.cpu || i.memory,
+					value : i[k]
+				};
+			} )
+		} );
+	} );
 
 	return {
-		"graph"         : title,
-		"total"         : true,
-		"type"          : "line",
-		"datasequences" : sequences
-	}
+		graph : {
+			title                : title,
+			total                : false,
+			type                 : "line",
+			yAxis                : {units: {suffix: unit}},
+			refreshEveryNSeconds : 1,
+			datasequences        : sequences
+		}
+	};
 }
 
 function stat () {
@@ -53,8 +74,8 @@ function stat () {
 			"15 min" : cpu[2].toFixed( 2 )
 		},
 		memory : {
-			used : os.totalmem() - os.freemem(),
-			free : os.freemem()
+			used : ( ( os.totalmem() - os.freemem() ) / GB ).toFixed( 2 ),
+			free : ( os.freemem() / GB ).toFixed( 2 )
 		}
 	} );
 
@@ -69,7 +90,7 @@ app.get( "/cpu.csv", function ( req, res ) {
 } );
 
 app.get( "/cpu.json", function ( req, res ) {
-	app.respond( req, res, transform( "CPU Load", cpu() ) );
+	app.respond( req, res, transform( "CPU Load", "%", cpu() ) );
 } );
 
 app.get( "/memory.csv", function ( req, res ) {
@@ -77,7 +98,7 @@ app.get( "/memory.csv", function ( req, res ) {
 } );
 
 app.get( "/memory.json", function ( req, res ) {
-	app.respond( req, res, transform( "Memory", memory() ) );
+	app.respond( req, res, transform( "Memory", "GB", memory() ) );
 } );
 
 app.get( "/table.csv", function ( req, res ) {

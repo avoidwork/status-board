@@ -1,0 +1,44 @@
+{
+  "name": "status-board",
+  "description": "System stats for Status Board",
+  "version": "1.0.0",
+  "homepage": "http://avoidwork.github.io/status-board/",
+  "author": {
+    "name": "Jason Mulligan",
+    "email": "jmulligan@avoidwork.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/avoidwork/status-board.git"
+  },
+  "bugs": {
+    "url": "https://github.com/avoidwork/status-board/issues"
+  },
+  "licenses": [
+    {
+      "type": "BSD-3",
+      "url": "https://raw.github.com/avoidwork/status-board/master/LICENSE"
+    }
+  ],
+  "main": "app.js",
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {
+    "turtle.io": "2.1.2",
+    "keigai": "0.5.5",
+    "filesize": "2.0.3"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "status board",
+    "panic",
+    "system",
+    "stats",
+    "dashboard",
+    "api"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+	"port": 8000,
+	"root": "./www",
+	"default": "localhost",
+	"vhosts": {
+		"localhost": "./"
+	}
+}

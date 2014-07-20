@@ -10,13 +10,14 @@ body {
 header,
 article {
 	width: 400px;
-	display: inline-block;
+	display: block;
 	vertical-align: top;
 }
 
 header *,
 article *,
-footer * {
+footer *,
+img {
 	margin: 10px;
 	margin-bottom: 25px;
 }
@@ -40,7 +41,26 @@ a:hover {
 	color: #ff7a29;
 }
 
+a * {
+	margin: 0 0 0 0;
+}
+
+ul,
+li {
+	padding: 0 0 0 0;
+}
+
+li {
+	margin: auto 0 10px 0;
+	list-style: none;
+}
+
 footer {
 	margin: 0px;
 	margin-top: 30px;
+}
+
+section {
+	display: inline-block;
+	vertical-align: top;
 }

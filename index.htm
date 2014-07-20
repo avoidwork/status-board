@@ -1,4 +1,4 @@
-<DOCTYPE!>
+<!DOCTYPE>
 <html>
 <head>
 	<title>status-board</title>
@@ -7,33 +7,42 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
 </head>
 <body>
-	<header>
-		<h1>System Stats for Status Board</h1>
-		<h4>The last 30 minutes in your hands, as it happens.</h4>
-	</header>
-	<article>
+	<section>
+		<header>
+			<h1>System Stats for Status Board</h1>
+			<h4>The last 30 minutes in your hands, as it happens.</h4>
+			<p>Configuration details are available on <a href="https://github.com/avoidwork/status-board">GitHub</a>.</p>
+			<ul>
+				<li><a href="https://github.com/avoidwork/status-board/zipball/master">Download <strong>ZIP file</strong></a></li>
+				<li><a href="https://github.com/avoidwork/status-board/tarball/master">Download <strong>TAR file</strong></a></li>
+			</ul>
+		</header>
+		<article>
+			<h2>Charts</h2>
+			<ul>
+				<li>CPU Load</li>
+				<li>Memory</li>
+			</ul>
+			<h2>Tables</h2>
+			<ul>
+				<li>CPU Load</li>
+				<li>Memory</li>
+				<li>Summary</li>
+			</ul>
+			<footer>
+				<p>Copyright &copy; <span id="year"></span> <a href="http://avoidwork.com" title="Contact information">Jason Mulligan</a><br />
+					BSD 3 Licensed</p>
+			</footer>
+		</article>
+	</section>
+	<section>
 		<img src="img/screenshot.jpg" alt="status-board screenshot" />
-		<h2>Charts</h2>
-		<ul>
-			<li>CPU Load</li>
-			<li>Memory</li>
-		</ul>
-		<h2>Tables</h2>
-		<ul>
-			<li>CPU Load</li>
-			<li>Memory</li>
-			<li>Summary</li>
-		</ul>
-		<footer>
-			<p>Copyright &copy; <span id="year"></span> <a href="http://avoidwork.com" title="Contact information">Jason Mulligan</a><br />
-				BSD 3 Licensed</p>
-		</footer>
-	</article>
+	</section>
 	<script type="text/javascript" src="js/keigai.min.js"></script>
 	<script type="text/javascript">
 	var util    = keigai.util,
 	    $       = util.$,
-	    element = util.element,
+	    element = util.element;
 
 		element.html( $( "#year" )[0], new Date().getFullYear() );
 	</script>

@@ -12,6 +12,23 @@
 4. Type `node app.js` to start the API
 
 ## Configuration Options
+### Authentication
+To enable authentication, add this object to your configuration, and set the user/pass combinations as required.
+
+```json
+"auth": {
+	"localhost": {
+		"authRealm": "Private",
+		"authList": ["user:pass"]
+	}
+}
+```
+
 ### Hostname
+To change the default hostname, change the key under "vhosts" to the new hostname.
+
 ### Port
+To change the default port from 8000, change the "port" value. To run on a low port such as 80, or 443, please create a new key:value pair named "uid" with the UID of the account to drop to after starting the application; elevated priviliges are required to start on low ports, but the application shouldn't continue to run as that account.
+
 ### SSL
+To enable SSL change the `null` values under "ssl" to file paths.

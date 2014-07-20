@@ -1,0 +1,41 @@
+<DOCTYPE!>
+<html>
+<head>
+	<title>status-board</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<link rel="stylesheet" type="text/css" href="css/style.css" media="screen" />
+</head>
+<body>
+	<header>
+		<h1>System Stats for Status Board</h1>
+		<h4>The last 30 minutes in your hands, as it happens.</h4>
+	</header>
+	<article>
+		<img src="img/screenshot.jpg" alt="status-board screenshot" />
+		<h2>Charts</h2>
+		<ul>
+			<li>CPU Load</li>
+			<li>Memory</li>
+		</ul>
+		<h2>Tables</h2>
+		<ul>
+			<li>CPU Load</li>
+			<li>Memory</li>
+			<li>Summary</li>
+		</ul>
+		<footer>
+			<p>Copyright &copy; <span id="year"></span> <a href="http://avoidwork.com" title="Contact information">Jason Mulligan</a><br />
+				BSD 3 Licensed</p>
+		</footer>
+	</article>
+	<script type="text/javascript" src="js/keigai.min.js"></script>
+	<script type="text/javascript">
+	var util    = keigai.util,
+	    $       = util.$,
+	    element = util.element,
+
+		element.html( $( "#year" )[0], new Date().getFullYear() );
+	</script>
+</body>
+</html>

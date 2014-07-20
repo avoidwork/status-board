@@ -1,11 +1,10 @@
 {
 	"port": 8000,
+	"colors": ["orange", "green", "blue"],
 	"refresh": 15,
+	"time": "h:mm:ss",
 	"root": "./www",
 	"default": "localhost",
-	"headers": {
-		"cache-control": "no-cache"
-	},
 	"ssl": {
 		"key": null,
 		"cert": null

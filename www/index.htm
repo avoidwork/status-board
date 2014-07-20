@@ -4,6 +4,23 @@
 </head>
 <body>
 <h1>System Stats for Status Board</h1>
-<p>Please <a href="panic://?url=/status.csv&panel=table&sourceDisplayName=System%40Status">click here</a> to add to your Status Board</p>
+<h2>CPU Load</h2>
+<p>Please <a href="panicboard://?url={{host}}/cpu.json&panel=graph">click here</a> to add a chart, or <a href="panicboard://?url={{host}}/cpu.csv&panel=table">click here</a> to add a table.</p>
+<h2>Memory</h2>
+<p>Please <a href="panicboard://?url={{host}}/memory.json&panel=graph">click here</a> to add a chart, or <a href="panicboard://?url={{host}}/memory.csv&panel=table">click here</a> to add a table.</p>
+<h2>Summary</h2>
+<p>Please <a href="panicboard://?url={{host}}/summary.csv&panel=table">click here</a> to add a table.</p>
+<script type="text/javascript" src="js/keigai.min.js"></script>
+<script type="text/javascript">
+var util   = keigai.util,
+    $      = util.$,
+    array  = util.array,
+    parsed = util.parse(),
+    host   = parsed.protocol + "//" + parsed.host;
+
+	array.each( $( "a" ), function ( i ) {
+		i.href = i.href.replace( "{{host}}", host );
+	} );
+</script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 # status-board
 
-***status-board*** is a node.js application designed to provide real time server stats to Panic's Status Board dashboard.
+***status-board*** is a node.js application designed to provide server statistics for the last 30 minutes in near real time to Panic's Status Board dashboard.
 
 ## Requirements
 - node.js 0.8.x or newer

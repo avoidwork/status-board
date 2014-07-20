@@ -9,6 +9,7 @@ var TurtleIO = require( "turtle.io" ),
     merge    = keigai.util.merge,
     stats    = [],
     HOUR     = 3600,
+    TABLE    = 300,
     GB       = Math.pow( 2, 30 );
 
 function cpu () {
@@ -84,7 +85,7 @@ function stat () {
 }
 
 app.get( "/cpu.csv", function ( req, res ) {
-	app.respond( req, res, csv( array.last( cpu(), 10 ).map( function ( i ) {
+	app.respond( req, res, csv( array.last( cpu(), TABLE ).map( function ( i ) {
 		var obj = i;
 
 		obj["1 min"] += " %";
@@ -100,7 +101,7 @@ app.get( "/cpu.json", function ( req, res ) {
 } );
 
 app.get( "/memory.csv", function ( req, res ) {
-	app.respond( req, res, csv( array.last( memory(), 300 ).map( function ( i ) {
+	app.respond( req, res, csv( array.last( memory(), TABLE ).map( function ( i ) {
 		var obj = i;
 
 		obj.used += " GB";
@@ -115,7 +116,7 @@ app.get( "/memory.json", function ( req, res ) {
 } );
 
 app.get( "/summary.csv", function ( req, res ) {
-	app.respond( req, res, csv( array.last( stats, 300 ).reverse().map( function ( i ) {
+	app.respond( req, res, csv( array.last( stats, TABLE ).reverse().map( function ( i ) {
 		return {
 			time   : i.time,
 			cpu    : i.cpu["1 min"] + " %",

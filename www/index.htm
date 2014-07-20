@@ -3,24 +3,34 @@
 <title>status-board</title>
 </head>
 <body>
-<h1>System Stats for Status Board</h1>
-<h2>CPU Load</h2>
-<p>Please <a href="panicboard://?url={{host}}/cpu.json&panel=graph">click here</a> to add a chart, or <a href="panicboard://?url={{host}}/cpu.csv&panel=table">click here</a> to add a table.</p>
-<h2>Memory</h2>
-<p>Please <a href="panicboard://?url={{host}}/memory.json&panel=graph">click here</a> to add a chart, or <a href="panicboard://?url={{host}}/memory.csv&panel=table">click here</a> to add a table.</p>
-<h2>Summary</h2>
-<p>Please <a href="panicboard://?url={{host}}/summary.csv&panel=table">click here</a> to add a table.</p>
+<header>
+	<h1>System Stats for Status Board</h1>
+</header>
+<article>
+	<h2>CPU Load</h2>
+	<p>Please <a href="panicboard://?url={{host}}/cpu.json&panel=graph">click here</a> to add a chart, or <a href="panicboard://?url={{host}}/cpu.csv&panel=table">click here</a> to add a table.</p>
+	<h2>Memory</h2>
+	<p>Please <a href="panicboard://?url={{host}}/memory.json&panel=graph">click here</a> to add a chart, or <a href="panicboard://?url={{host}}/memory.csv&panel=table">click here</a> to add a table.</p>
+	<h2>Summary</h2>
+	<p>Please <a href="panicboard://?url={{host}}/summary.csv&panel=table">click here</a> to add a table.</p>
+</article>
+<footer>
+	<p>Copyright &copy; <span id="year"></span> Jason Mulligan | BSD 3 Licensed</p>
+</footer>
 <script type="text/javascript" src="js/keigai.min.js"></script>
 <script type="text/javascript">
-var util   = keigai.util,
-    $      = util.$,
-    array  = util.array,
-    parsed = util.parse(),
-    host   = parsed.protocol + "//" + parsed.host;
+var util    = keigai.util,
+    $       = util.$,
+    array   = util.array,
+    element = util.element,
+    parsed  = util.parse(),
+    host    = parsed.protocol + "//" + parsed.host;
 
 	array.each( $( "a" ), function ( i ) {
 		i.href = i.href.replace( "{{host}}", host );
 	} );
+
+	element.html( $( "#year" )[0], new Date().getFullYear() );
 </script>
 </body>
 </html>

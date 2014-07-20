@@ -58,7 +58,7 @@ function transform ( title, unit, data ) {
 			total                : false,
 			type                 : "line",
 			yAxis                : {units: {suffix: unit}},
-			refreshEveryNSeconds : 1,
+			refreshEveryNSeconds : config.refresh,
 			datasequences        : sequences
 		}
 	};

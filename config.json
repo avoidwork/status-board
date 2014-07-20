@@ -1,5 +1,6 @@
 {
 	"port": 8000,
+	"refresh": 15,
 	"root": "./www",
 	"default": "localhost",
 	"headers": {

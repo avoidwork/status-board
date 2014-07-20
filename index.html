@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>status-board by avoidwork</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>status-board</h1>
+        <h2>Node.js application to feed system stats into Panic&#39;s Status Board</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/avoidwork/status-board/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/avoidwork/status-board/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/avoidwork/status-board" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p><strong><em>status-board</em></strong> is a node.js application designed to provide real time server stats to Panic's Status Board dashboard.</p>
+
+<h2>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li>node.js 0.8.x or newer</li>
+</ul><h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<ol>
+<li>Clone this repository, and change to it</li>
+<li>Edit <code>config.json</code> to change the port, auth or enable SSL</li>
+<li>Type <code>npm install</code> to install the dependencies</li>
+<li>Type <code>node app.js</code> to start the API</li>
+</ol><h2>
+<a name="configuration-options" class="anchor" href="#configuration-options"><span class="octicon octicon-link"></span></a>Configuration Options</h2>
+
+<h3>
+<a name="authentication-disabled" class="anchor" href="#authentication-disabled"><span class="octicon octicon-link"></span></a>Authentication (disabled)</h3>
+
+<p>To enable authentication, add this object to your configuration, and set the user/pass combinations as required.</p>
+
+<div class="highlight highlight-json"><pre><span class="s2">"auth"</span><span class="err">:</span> <span class="p">{</span>
+    <span class="nt">"localhost"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"authRealm"</span><span class="p">:</span> <span class="s2">"Private"</span><span class="p">,</span>
+        <span class="nt">"authList"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"user:pass"</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="hostname-localhost" class="anchor" href="#hostname-localhost"><span class="octicon octicon-link"></span></a>Hostname (localhost)</h3>
+
+<p>To change the default hostname, change the key under "vhosts" to the new hostname.</p>
+
+<h3>
+<a name="port-8000" class="anchor" href="#port-8000"><span class="octicon octicon-link"></span></a>Port (8000)</h3>
+
+<p>To change the default port from 8000, change the "port" value. To run on a low port such as 80, or 443, please create a new key:value pair named "uid" with the UID of the account to drop to after starting the application; elevated priviliges are required to start on low ports, but the application shouldn't continue to run as that account.</p>
+
+<h3>
+<a name="refresh-15-seconds" class="anchor" href="#refresh-15-seconds"><span class="octicon octicon-link"></span></a>Refresh (15 seconds)</h3>
+
+<p>To change the refresh of Status Board, change the "refresh" value to the desired number of seconds. Lower than 15 appears to have no affect.</p>
+
+<h3>
+<a name="ssl-disabled" class="anchor" href="#ssl-disabled"><span class="octicon octicon-link"></span></a>SSL (disabled)</h3>
+
+<p>To enable SSL change the <code>null</code> values under "ssl" to file paths.</p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>

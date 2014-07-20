@@ -8,6 +8,7 @@ var TurtleIO = require( "turtle.io" ),
     csv      = keigai.util.json.csv,
     merge    = keigai.util.merge,
     stats    = [],
+    HOUR     = 3600,
     GB       = Math.pow( 2, 30 );
 
 function cpu () {
@@ -79,9 +80,8 @@ function stat () {
 		}
 	} );
 
-	// Holding an hour of stats
-	if ( stats.length > 3600 ) {
-		stats = array.limit( stats, 3600 );
+	if ( stats.length > HOUR ) {
+		stats = array.last( stats, HOUR );
 	}
 }
 

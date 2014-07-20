@@ -4,6 +4,7 @@ var TurtleIO = require( "turtle.io" ),
     os       = require( "os" ),
     config   = require( "./config.json" ),
     app      = new TurtleIO(),
+    root     = __dirname + "/www",
     array    = keigai.util.array,
     csv      = keigai.util.json.csv,
     merge    = keigai.util.merge,
@@ -127,6 +128,7 @@ app.get( "/summary.csv", function ( req, res ) {
 	} ) ), 200, {"cache-control": "no-cache", "content-type": "text/csv"} );
 } );
 
+config.root = root;
 app.start( config );
 
 setInterval( stat, 1000 );

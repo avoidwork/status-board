@@ -3,7 +3,6 @@
 	"colors": ["orange", "green", "blue"],
 	"refresh": 15,
 	"time": "h:mm:ss",
-	"root": "./www",
 	"default": "localhost",
 	"ssl": {
 		"key": null,

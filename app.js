@@ -66,9 +66,9 @@ function stat () {
 
 	stats.cpu.csv.push( {
 		time     : time,
-		"1 min"  : cpu[0] += " %",
-		"5 min"  : cpu[1] += " %",
-		"15 min" : cpu[2] += " %"
+		"1 min"  : cpu[0] + " %",
+		"5 min"  : cpu[1] + " %",
+		"15 min" : cpu[2] + " %"
 	} );
 
 	stats.cpu.json.push( {

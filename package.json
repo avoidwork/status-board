@@ -1,7 +1,7 @@
 {
   "name": "status-board",
   "description": "System stats for Status Board",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage": "http://avoidwork.github.io/status-board/",
   "author": {
     "name": "Jason Mulligan",

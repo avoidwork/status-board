@@ -1,3 +1,5 @@
+"use strict";
+
 var TurtleIO = require( "turtle.io" ),
     keigai   = require( "keigai" ),
     moment   = require( "moment" ),
@@ -8,22 +10,10 @@ var TurtleIO = require( "turtle.io" ),
     array    = keigai.util.array,
     csv      = keigai.util.json.csv,
     merge    = keigai.util.merge,
-    stats    = [],
+    stats    = {cpu: {csv: [], json: []}, memory: {csv: [], json:[]}, summary: {csv: []}},
     CHART    = 1800,
     TABLE    = 10,
     GB       = Math.pow( 2, 30 );
-
-function prepare ( key ) {
-	return array.keySort( stats.map( function ( i ) {
-		return merge( {"time": i.time, "unix": i.unix}, i[key] );
-	} ), "unix" ).map( function ( i ) {
-		var obj = i;
-
-		delete obj.unix;
-
-		return obj;
-	} );
-}
 
 function transform ( title, unit, data ) {
 	var keys      = data.length > 0 ? array.keys( data[0] ) : [],
@@ -56,7 +46,7 @@ function transform ( title, unit, data ) {
 		}
 	};
 
-	if ( title = "Memory" && obj.graph.datasequences[0] && obj.graph.datasequences[1] ) {
+	if ( title = "Memory" && obj.graph.datasequences[0] && obj.graph.datasequences[0].datapoints[0] && obj.graph.datasequences[1] && obj.graph.datasequences[1].datapoints[1] ) {
 		obj.graph.yAxis.minValue = 0;
 		obj.graph.yAxis.maxValue = Math.ceil( parseFloat( obj.graph.datasequences[0].datapoints[0].value ) + parseFloat( obj.graph.datasequences[1].datapoints[1].value ) );
 	}
@@ -65,67 +55,77 @@ function transform ( title, unit, data ) {
 }
 
 function stat () {
-	var cpu = os.loadavg(),
-		time = moment().format( config.time );
+	var cpu  = os.loadavg(),
+		time = moment().format( config.time ),
+		free = ( os.freemem() / GB ).toFixed( 2 ),
+		used = ( ( os.totalmem() - os.freemem() ) / GB ).toFixed( 2 );
 
-	stats.push( {
-		time   : moment().format( config.time ),
-		unix   : new Date().getTime(),
-		cpu    : {
-			"1 min"  : cpu[0].toFixed( 2 ),
-			"5 min"  : cpu[1].toFixed( 2 ),
-			"15 min" : cpu[2].toFixed( 2 )
-		},
-		memory : {
-			used : ( ( os.totalmem() - os.freemem() ) / GB ).toFixed( 2 ),
-			free : ( os.freemem() / GB ).toFixed( 2 )
-		}
+	cpu[0] = cpu[0].toFixed( 2 );
+	cpu[1] = cpu[1].toFixed( 2 );
+	cpu[2] = cpu[2].toFixed( 2 );
+
+	stats.cpu.csv.push( {
+		time     : time,
+		"1 min"  : cpu[0] += " %",
+		"5 min"  : cpu[1] += " %",
+		"15 min" : cpu[2] += " %"
 	} );
 
-	if ( stats.length > CHART ) {
-		stats = array.last( stats, CHART );
+	stats.cpu.json.push( {
+		time     : time,
+		"1 min"  : cpu[0],
+		"5 min"  : cpu[1],
+		"15 min" : cpu[2]
+	} );
+
+	stats.memory.csv.push( {
+		time : time,
+		used : used + " GB",
+		free : free + " GB"
+	} );
+
+	stats.memory.json.push( {
+		time : time,
+		used : used,
+		free : free
+	} );
+
+	stats.summary.csv.push( {
+		time   : time,
+		cpu    : cpu[0] + " %",
+		memory : used + " GB"
+	} );
+
+	if ( stats.summary.csv.length > TABLE ) {
+		stats.cpu.csv     = array.last( stats.cpu.csv,     TABLE );
+		stats.memory.csv  = array.last( stats.memory.csv,  TABLE );
+		stats.summary.csv = array.last( stats.summary.csv, TABLE );
+	}
+
+	if ( stats.cpu.json.length > CHART ) {
+		stats.cpu.json    = array.last( stats.cpu.json,    CHART );
+		stats.memory.json = array.last( stats.memory.json, CHART );
 	}
 }
 
 app.get( "/cpu.csv", function ( req, res ) {
-	app.respond( req, res, csv( array.last( prepare( "cpu" ), TABLE ).map( function ( i ) {
-		var obj = i;
-
-		obj["1 min"] += " %";
-		obj["5 min"] += " %";
-		obj["15 min"] += " %";
-
-		return obj;
-	} ).reverse() ), 200, {"cache-control": "no-cache", "content-type": "text/csv"} );
+	app.respond( req, res, csv( stats.cpu.csv.reverse() ), 200, {"cache-control": "no-cache", "content-type": "text/csv"} );
 } );
 
 app.get( "/cpu.json", function ( req, res ) {
-	app.respond( req, res, transform( "CPU Load", "%", prepare( "cpu" ) ), 200, {"cache-control": "no-cache"} );
+	app.respond( req, res, transform( "CPU Load", "%", stats.cpu.json ), 200, {"cache-control": "no-cache"} );
 } );
 
 app.get( "/memory.csv", function ( req, res ) {
-	app.respond( req, res, csv( array.last( prepare( "memory" ), TABLE ).map( function ( i ) {
-		var obj = i;
-
-		obj.used += " GB";
-		obj.free += " GB";
-
-		return obj;
-	} ).reverse() ), 200, {"cache-control": "no-cache", "content-type": "text/csv"} );
+	app.respond( req, res, csv( stats.memory.csv.reverse() ), 200, {"cache-control": "no-cache", "content-type": "text/csv"} );
 } );
 
 app.get( "/memory.json", function ( req, res ) {
-	app.respond( req, res, transform( "Memory", "GB", prepare( "memory" ) ), 200, {"cache-control": "no-cache"} );
+	app.respond( req, res, transform( "Memory", "GB", stats.memory.json ), 200, {"cache-control": "no-cache"} );
 } );
 
 app.get( "/summary.csv", function ( req, res ) {
-	app.respond( req, res, csv( array.last( stats, TABLE ).reverse().map( function ( i ) {
-		return {
-			time   : i.time,
-			cpu    : i.cpu["1 min"] + " %",
-			memory : i.memory.used + " GB"
-		};
-	} ) ), 200, {"cache-control": "no-cache", "content-type": "text/csv"} );
+	app.respond( req, res, csv( stats.summary.csv.reverse() ), 200, {"cache-control": "no-cache", "content-type": "text/csv"} );
 } );
 
 config.root = root;

@@ -1,7 +1,7 @@
 {
   "name": "status-board",
   "description": "System stats for Status Board",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "homepage": "http://avoidwork.github.io/status-board/",
   "author": {
     "name": "Jason Mulligan",
@@ -28,8 +28,8 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "turtle.io": "2.1.4",
-    "keigai": "0.5.5",
+    "turtle.io": "2.1.5",
+    "keigai": "0.6.0",
     "moment": "2.7.0"
   },
   "devDependencies": {},
